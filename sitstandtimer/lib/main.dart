@@ -31,10 +31,16 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
+  static var times;
+
+  @override
+  initState() {
+    times = [1, 8, 2];
+  }
 
   static List<Widget> _widgetOptions = <Widget>[
-    TimerPage(),
-    SettingsPage(),
+    TimerPage(times),
+    SettingsPage(times),
   ];
 
   void _onItemTapped(int index) {
