@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   initState() {
-    times = [1, 8, 2];
+    times = [20, 8, 2];
   }
 
   static List<Widget> _widgetOptions = <Widget>[
