@@ -1,11 +1,19 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sitstandtimer/pages/settingsPage.dart';
 import 'package:sitstandtimer/pages/timerPage.dart';
+import 'package:window_size/window_size.dart';
 
 const Color primaryColor = Color(0x0455BF);
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
+    setWindowTitle('Sit Stand Move');
+    setWindowMinSize(const Size(400, 650));
+  }
   runApp(MyApp());
 }
 
