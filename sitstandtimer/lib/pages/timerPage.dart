@@ -53,8 +53,8 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
     );
 
     _animation = Tween(
-      begin: 0.0,
-      end: 1.0,
+      begin: 1.0,
+      end: 0.0,
     ).animate(_controller);
   }
 
