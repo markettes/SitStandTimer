@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:audioplayers/audio_cache.dart';
@@ -45,7 +46,7 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
     pointer = 0;
     tipPointer = Random().nextInt(Tips.tips.length);
     current[pointer] = true;
-    timer = Timer.periodic(Duration(minutes: 5), (timer) => _changeText());
+    timer = Timer.periodic(Duration(minutes: 2), (timer) => _changeText());
 
     _controller = AnimationController(
       vsync: this,
@@ -53,8 +54,8 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
     );
 
     _animation = Tween(
-      begin: 1.0,
-      end: 0.0,
+      begin: 0.0,
+      end: 1.0,
     ).animate(_controller);
   }
 
@@ -73,11 +74,13 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
+            alignment: Alignment.center,
             padding: EdgeInsets.all(10),
             child: FadeTransition(
               opacity: _animation,
               child: Text(
                 Tips.tips[tipPointer],
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -85,6 +88,7 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
                 ),
               ),
             ),
+            margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
           ),
           Expanded(
             child: SimpleTimer(
