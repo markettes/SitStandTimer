@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "481954423248",
+    "project_id": "sitstandtimer",
+    "storage_bucket": "sitstandtimer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:481954423248:android:3339375d26765349b1d9d5",
+        "android_client_info": {
+          "package_name": "com.markettesdev.sitstandtimer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "481954423248-1bi19d6fte2pgh2s289psnbv2m5ts2of.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.markettesdev.sitstandtimer",
+            "certificate_hash": "08ebf558d7ddfd99a10942a58067c8bffcc7814e"
+          }
+        },
+        {
+          "client_id": "481954423248-2jmfo4s822lrd6i93mk5cr1l5s393l8o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDy19ES2dVRLy4fteESHkmnxs-m2DfNpFs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "481954423248-2jmfo4s822lrd6i93mk5cr1l5s393l8o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

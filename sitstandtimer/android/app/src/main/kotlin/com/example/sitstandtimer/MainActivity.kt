@@ -1,4 +1,4 @@
-package com.example.sitstandtimer
+package com.markettesdev.sitstandtimer
 
 import io.flutter.embedding.android.FlutterActivity
 
