@@ -4,15 +4,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sitstandtimer/pages/settingsPage.dart';
 import 'package:sitstandtimer/pages/timerPage.dart';
-import 'package:window_size/window_size.dart';
+import 'package:desktop_window/desktop_window.dart';
 
 const Color primaryColor = Color(0x0455BF);
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
-    setWindowTitle('Sit Stand Move');
-    setWindowMinSize(const Size(400, 650));
+    // setWindowTitle('Sit Stand Move');
+    DesktopWindow.setMinWindowSize(const Size(400, 650));
   }
   runApp(MyApp());
 }
