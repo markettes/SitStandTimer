@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sitstandtimer/pages/historicPage.dart';
 import 'package:sitstandtimer/pages/settingsPage.dart';
 import 'package:sitstandtimer/pages/timerPage.dart';
 import 'package:desktop_window/desktop_window.dart';
@@ -49,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
   static List<Widget> _widgetOptions = <Widget>[
     TimerPage(times),
     SettingsPage(times),
+    HistoricPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -77,6 +79,10 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.dial),
             label: 'Edit',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.chart_bar),
+            label: 'History',
           ),
         ],
         currentIndex: _selectedIndex,

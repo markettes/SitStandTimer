@@ -3,15 +3,23 @@ import 'dart:collection';
 import 'package:flutter/widgets.dart';
 
 class HistoricPage extends StatefulWidget {
-  const HistoricPage(super(key: key));
+  HistoricPage() {
+    this.times = HashMap();
+  }
 
-  final Map<String, String> times = HashMap();
+  Map<String, String>? times;
 
   @override
-  State<HistoricPage> createState() => _HistoricPageState();
+  State<HistoricPage> createState() => _HistoricPageState(times);
 }
 
 class _HistoricPageState extends State<HistoricPage> {
+  Map<String, String>? times;
+
+  _HistoricPageState(times) {
+    this.times = times;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container();
