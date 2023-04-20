@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,17 +20,17 @@ class TimerPage extends StatefulWidget {
 }
 
 class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
-  TimerController _timerController;
-  var current;
-  int pointer;
-  int tipPointer;
-  String _buttonText;
+  TimerController? _timerController;
+  late var current;
+  int? pointer;
+  late int tipPointer;
+  late String _buttonText;
   var times;
-  Timer timer;
+  Timer? timer;
 
-  AnimationController _controller;
+  late AnimationController _controller;
 
-  Animation _animation;
+  late Animation _animation;
 
   _TimerPageState(times) {
     this.times = times;
@@ -77,7 +76,7 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
             alignment: Alignment.center,
             padding: EdgeInsets.all(10),
             child: FadeTransition(
-              opacity: _animation,
+              opacity: _animation as Animation<double>,
               child: Text(
                 Tips.tips[tipPointer],
                 textAlign: TextAlign.center,
@@ -100,15 +99,15 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
               onEnd: () {
                 setState(() {
                   current[pointer] = false;
-                  pointer = (pointer + 1) % 3;
+                  pointer = (pointer! + 1) % 3;
                   current[pointer] = true;
-                  _timerController.duration = Duration(
+                  _timerController!.duration = Duration(
                     minutes: times[pointer],
                   );
                 });
                 playLocalAsset();
-                _timerController.reset();
-                _timerController.start();
+                _timerController!.reset();
+                _timerController!.start();
               },
             ),
           ),
@@ -155,12 +154,12 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
 
   _timerButtonAction() {
     if (_buttonText.compareTo('Start') == 0) {
-      _timerController.start();
+      _timerController!.start();
       setState(() {
         _buttonText = 'Stop';
       });
     } else {
-      _timerController.stop();
+      _timerController!.stop();
       setState(() {
         _buttonText = 'Start';
       });
@@ -173,8 +172,8 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
         current[pointer] = false;
         pointer = to;
         current[pointer] = true;
-        _timerController.reset();
-        _timerController.duration = Duration(
+        _timerController!.reset();
+        _timerController!.duration = Duration(
           minutes: times[pointer],
         );
         _buttonText = 'Start';
@@ -190,10 +189,8 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
     await _controller.animateTo(1, duration: Duration(milliseconds: 500));
   }
 
-  Future<AudioPlayer> playLocalAsset() async {
-    AudioCache cache = new AudioCache();
-    //At the next line, DO NOT pass the entire reference such as assets/yes.mp3. This will not work.
-    //Just pass the file name only.
-    return await cache.play("bell.mp3");
+  Future<void> playLocalAsset() async {
+    final player = AudioPlayer();
+    return await player.play(AssetSource("bell.mp3"));
   }
 }
