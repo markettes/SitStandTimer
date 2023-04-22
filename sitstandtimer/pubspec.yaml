@@ -23,6 +23,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  sqflite:
+  intl:
+  path:
   numberpicker: ^2.1.1
   audioplayers: ^4.0.1
   simple_timer: ^2.0.0

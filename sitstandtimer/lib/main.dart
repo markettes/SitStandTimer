@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sitstandtimer/pages/historicPage.dart';
-import 'package:sitstandtimer/pages/settingsPage.dart';
-import 'package:sitstandtimer/pages/timerPage.dart';
+import 'package:sitstandtimer/pages/HistoricPage.dart';
+import 'package:sitstandtimer/pages/SettingsPage.dart';
+import 'package:sitstandtimer/pages/TimerPage.dart';
 import 'package:desktop_window/desktop_window.dart';
 
 const Color primaryColor = Color(0x0455BF);
@@ -61,33 +61,36 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromARGB(100, 4, 85, 191),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.transparent,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white60,
-        elevation: 0,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.alarm),
-            label: 'Timer',
+    return Container(
+        padding: EdgeInsets.only(bottom: 10),
+        color: Color.fromARGB(100, 4, 85, 191),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Center(
+            child: _widgetOptions.elementAt(_selectedIndex),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.dial),
-            label: 'Edit',
+          bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: Colors.transparent,
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Colors.white60,
+            elevation: 0,
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.alarm),
+                label: 'Timer',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.dial),
+                label: 'Edit',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.chart_bar),
+                label: 'History',
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.chart_bar),
-            label: 'History',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-      ),
-    );
+        ));
   }
 }

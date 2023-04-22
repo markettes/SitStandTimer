@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_timer/simple_timer.dart';
 import 'package:sitstandtimer/main.dart';
-import 'package:sitstandtimer/models/tips.dart';
+import 'package:sitstandtimer/models/Tips.dart';
 
 class TimerPage extends StatefulWidget {
   TimerPage(this.times);
@@ -45,7 +45,7 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
     pointer = 0;
     tipPointer = Random().nextInt(Tips.tips.length);
     current[pointer] = true;
-    timer = Timer.periodic(Duration(minutes: 2), (timer) => _changeText());
+    timer = Timer.periodic(Duration(seconds: 30), (timer) => _changeText());
 
     _controller = AnimationController(
       vsync: this,
@@ -87,7 +87,7 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
                 ),
               ),
             ),
-            margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
+            margin: EdgeInsets.fromLTRB(0, 0, 0, 70),
           ),
           Expanded(
             child: SimpleTimer(
