@@ -45,7 +45,7 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
     pointer = 0;
     tipPointer = Random().nextInt(Tips.tips.length);
     current[pointer] = true;
-    timer = Timer.periodic(Duration(seconds: 30), (timer) => _changeText());
+    timer = Timer.periodic(Duration(seconds: 5), (timer) => _changeText());
 
     _controller = AnimationController(
       vsync: this,
@@ -61,6 +61,7 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
   @override
   void dispose() {
     _controller.dispose();
+    timer?.cancel();
     super.dispose();
   }
 
