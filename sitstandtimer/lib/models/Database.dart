@@ -5,7 +5,7 @@ import 'package:sitstandtimer/models/Register.dart';
 import 'package:sqflite/sqflite.dart';
 
 class AppDatabase {
-  static final AppDatabase _instance = AppDatabase._init();
+  static final AppDatabase instance = AppDatabase._init();
 
   static Database? _database;
 
@@ -38,19 +38,19 @@ class AppDatabase {
   }
 
   Future close() async {
-    final db = await _instance.database;
+    final db = await instance.database;
     db.close();
   }
 
-  Future<Register> create(Register register) async {
-    final db = await _instance.database;
+  Future<Register> createRegister(Register register) async {
+    final db = await instance.database;
 
     final id = await db.insert(tableRegister, register.toMap());
     return register.copy(id: id);
   }
 
   Future<Register> readRegister(int id) async {
-    final db = await _instance.database;
+    final db = await instance.database;
 
     final maps = await db.query(
       tableRegister,
@@ -67,7 +67,7 @@ class AppDatabase {
   }
 
   Future<List<Register>> readAllRegisters() async {
-    final db = await _instance.database;
+    final db = await instance.database;
 
     final orderBy = '${RegisterFields.date} ASC';
 
@@ -77,7 +77,7 @@ class AppDatabase {
   }
 
   Future<int> update(Register register) async {
-    final db = await _instance.database;
+    final db = await instance.database;
 
     return db.update(
       tableRegister,
@@ -88,7 +88,7 @@ class AppDatabase {
   }
 
   Future<int> delete(int id) async {
-    final db = await _instance.database;
+    final db = await instance.database;
 
     return await db.delete(
       tableRegister,
@@ -98,7 +98,7 @@ class AppDatabase {
   }
 
   Future<Register> readRegisterByDate(DateTime date) async {
-    final db = await _instance.database;
+    final db = await instance.database;
 
     final maps = await db.query(
       tableRegister,

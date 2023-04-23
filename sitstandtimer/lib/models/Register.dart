@@ -21,7 +21,7 @@ class Register {
   int moveTime;
 
   Register({
-    required this.id,
+    this.id,
     required this.date,
     required this.sitTime,
     required this.standTime,

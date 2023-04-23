@@ -8,7 +8,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_timer/simple_timer.dart';
 import 'package:sitstandtimer/main.dart';
+import 'package:sitstandtimer/models/Database.dart';
+import 'package:sitstandtimer/models/Register.dart';
 import 'package:sitstandtimer/models/Tips.dart';
+import 'package:sitstandtimer/models/Database.dart';
 
 class TimerPage extends StatefulWidget {
   TimerPage(this.times);
@@ -98,6 +101,7 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
               progressTextStyle: TextStyle(color: Colors.white),
               onEnd: () {
                 setState(() {
+
                   current[pointer] = false;
                   pointer = (pointer! + 1) % 3;
                   current[pointer] = true;
@@ -164,6 +168,22 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
         _buttonText = 'Start';
       });
     }
+  }
+
+  _addTimeToRegister(int timeInSeconds, int phase) async {
+    var now = DateTime.now();
+    var today = DateTime(now.year, now.month, now.day);
+    var register = await AppDatabase.instance.readRegisterByDate(today);
+    if (register == null) {
+      register = Register(
+        date: today,
+        sitTime: 0,
+        standTime: 0,
+        moveTime: 0,
+      );
+    }
+
+    
   }
 
   _changePhase(int to) {
