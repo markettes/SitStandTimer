@@ -64,6 +64,9 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
   @override
   void dispose() {
     _controller.dispose();
+    if (_timerController!.isAnimating) {
+      _addTimeCheckingController();
+    }
     timer?.cancel();
     super.dispose();
   }
@@ -102,7 +105,7 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
               progressTextStyle: TextStyle(color: Colors.white),
               onEnd: () {
                 setState(() {
-
+                  _addTimeToRegister(times[pointer] * 60, pointer!);
                   current[pointer] = false;
                   pointer = (pointer! + 1) % 3;
                   current[pointer] = true;
@@ -122,39 +125,60 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CupertinoButton(
-                  child: Text(
-                    'Sit',
-                    style: TextStyle(
-                        color: !current[0] ? Colors.grey : Colors.white),
-                  ),
-                  onPressed: () => _changePhase(0),
-                ),
+                    child: Text(
+                      'Sit',
+                      style: TextStyle(
+                          color: !current[0] ? Colors.grey : Colors.white),
+                    ),
+                    onPressed: () {
+                      if (_timerController!.isAnimating) {
+                        _addTimeCheckingController();
+                      }
+                      _changePhase(0);
+                    }),
                 CupertinoButton(
-                  child: Text(
-                    'Stand',
-                    style: TextStyle(
-                        color: !current[1] ? Colors.grey : Colors.white),
-                  ),
-                  onPressed: () => _changePhase(1),
-                ),
+                    child: Text(
+                      'Stand',
+                      style: TextStyle(
+                          color: !current[1] ? Colors.grey : Colors.white),
+                    ),
+                    onPressed: () {
+                      if (_timerController!.isAnimating) {
+                        _addTimeCheckingController();
+                      }
+                      _changePhase(1);
+                    }),
                 CupertinoButton(
-                  child: Text(
-                    'Move',
-                    style: TextStyle(
-                        color: !current[2] ? Colors.grey : Colors.white),
-                  ),
-                  onPressed: () => _changePhase(2),
-                ),
+                    child: Text(
+                      'Move',
+                      style: TextStyle(
+                          color: !current[2] ? Colors.grey : Colors.white),
+                    ),
+                    onPressed: () {
+                      if (_timerController!.isAnimating) {
+                        _addTimeCheckingController();
+                      }
+                      _changePhase(2);
+                    }),
               ],
             ),
           ),
           CupertinoButton.filled(
-            child: Text(_buttonText),
-            onPressed: () => _timerButtonAction(),
-          )
+              child: Text(_buttonText),
+              onPressed: () {
+                if (_buttonText.compareTo('Stop') == 0) {
+                  _addTimeCheckingController();
+                }
+                _timerButtonAction();
+              })
         ],
       ),
     );
+  }
+
+  _addTimeCheckingController() {
+    var timeToAdd = _timerController!.lastElapsedDuration!.inSeconds;
+    _addTimeToRegister(timeToAdd, pointer!);
   }
 
   _timerButtonAction() {
@@ -172,9 +196,10 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
   }
 
   _addTimeToRegister(int timeInSeconds, int phase) async {
+    var db = await AppDatabase.instance;
     var now = DateTime.now();
     var today = DateTime(now.year, now.month, now.day);
-    var register = await AppDatabase.instance.readRegisterByDate(today);
+    var register = await db.readRegisterByDate(today);
     if (register == null) {
       register = Register(
         date: today,
@@ -182,9 +207,20 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
         standTime: 0,
         moveTime: 0,
       );
+      register = await db.createRegister(register);
     }
-
-    
+    switch (phase) {
+      case 0:
+        register.sitTime += timeInSeconds;
+        break;
+      case 1:
+        register.standTime += timeInSeconds;
+        break;
+      case 2:
+        register.moveTime += timeInSeconds;
+        break;
+    }
+    await db.updateRegister(register);
   }
 
   _changePhase(int to) {

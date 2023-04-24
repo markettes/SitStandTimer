@@ -76,7 +76,7 @@ class AppDatabase {
     return result.map((json) => Register.fromMap(json)).toList();
   }
 
-  Future<int> update(Register register) async {
+  Future<int> updateRegister(Register register) async {
     final db = await instance.database;
 
     return db.update(
@@ -87,7 +87,49 @@ class AppDatabase {
     );
   }
 
-  Future<int> delete(int id) async {
+  Future<int> updateStandTime(int id, int standTime) async {
+    final db = await instance.database;
+
+    var r = await readRegister(id);
+    var newRegister = Register(
+      date: r.date,
+      sitTime: r.sitTime,
+      standTime: standTime + r.standTime,
+      moveTime: r.moveTime,
+    );
+
+    return updateRegister(newRegister);
+  }
+
+  Future<int> updateSitTime(int id, int sitTime) async {
+    final db = await instance.database;
+
+    var r = await readRegister(id);
+    var newRegister = Register(
+      date: r.date,
+      sitTime: sitTime + r.sitTime,
+      standTime: r.standTime,
+      moveTime: r.moveTime,
+    );
+
+    return updateRegister(newRegister);
+  }
+
+  Future<int> updateMoveTime(int id, int moveTime) async {
+    final db = await instance.database;
+
+    var r = await readRegister(id);
+    var newRegister = Register(
+      date: r.date,
+      sitTime: r.sitTime,
+      standTime: r.standTime,
+      moveTime: moveTime + r.moveTime,
+    );
+
+    return updateRegister(newRegister);
+  }
+
+  Future<int> deleteRegister(int id) async {
     final db = await instance.database;
 
     return await db.delete(
@@ -97,7 +139,7 @@ class AppDatabase {
     );
   }
 
-  Future<Register> readRegisterByDate(DateTime date) async {
+  Future<Register?> readRegisterByDate(DateTime date) async {
     final db = await instance.database;
 
     final maps = await db.query(
@@ -110,7 +152,7 @@ class AppDatabase {
     if (maps.isNotEmpty) {
       return Register.fromMap(maps.first);
     } else {
-      throw Exception('Date $date not found');
+      return null;
     }
   }
 }

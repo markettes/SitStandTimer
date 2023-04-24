@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(CupertinoIcons.chart_bar),
-                label: 'History',
+                label: 'Statistics',
               ),
             ],
             currentIndex: _selectedIndex,
